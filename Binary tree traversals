@@ -1,0 +1,87 @@
+#include<stdio.h>
+
+int len = 15;
+char tree[] = {'A', 'b', 'c', '\0', 'd', 'i', 'j', '\0', '\0', 'k', '\0', 'L', '\0', '\0', 'M'};
+
+int get_right_child(int index)
+{
+    return (2*index)+2;
+}
+
+int get_left_child(int index)
+{
+    return 2*index+1;
+}
+
+void preorder(int index) {
+    if(tree[index] == '\0') {
+        return;
+    }
+    printf(" %c", tree[index]);
+    preorder(get_left_child(index));
+    preorder(get_right_child(index));
+}
+
+void postorder(int index) {
+    if(tree[index] == '\0') {
+        return;
+    }
+    postorder(get_left_child(index));
+    postorder(get_right_child(index));
+    printf(" %c", tree[index]);
+}
+
+void inorder(int index) {
+    if(tree[index] == '\0') {
+        return;
+    }
+    inorder(get_left_child(index));
+    printf(" %c", tree[index]);
+    inorder(get_right_child(index));
+}
+
+int height(int index) {
+    if(tree[index] == '\0') {
+        return 0;
+    }
+    int leftHeight = height(get_left_child(index));
+    int rightHeight = height(get_right_child(index));
+    if(leftHeight > rightHeight) {
+        return leftHeight + 1;    
+    } else {
+        return rightHeight + 1;
+    }
+}
+
+void printCurrLevel(int index, int level) {
+    if(tree[index] == '\0') {
+        return;
+    }
+    if(level == 1)
+        printf("%c ", tree[index]);
+    else if (level > 1) {
+        printCurrLevel(get_left_child(index), level - 1);
+        printCurrLevel(get_right_child(index), level - 1);
+    }
+}
+
+void levelOrder(int index) {
+    int h = height(index);
+    for(int i = 1; i <= h; i++) {
+        printCurrLevel(index, i);
+    }
+}
+
+int main() {
+    printf("Preorder: ");
+    preorder(0);
+    printf("\nPostorder: ");
+    postorder(0);
+    printf("\nInorder: ");
+    inorder(0);
+    putchar('\n');
+    printf("LevelOrder: ");
+    levelOrder(0);
+    putchar('\n');
+    return 0;
+}
