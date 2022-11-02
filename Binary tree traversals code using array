@@ -1,75 +1,66 @@
 #include <stdio.h>
+int complete_node = 1000;
 
-
-
-          
-
-// variable to store maximum number of nodes
-int complete_node = 15;
-
-// array to store the tree
 char tree[] = {'\0', 'A', 'B', 'C', '\0', 'D', 'I', 'J', '\0', '\0', '\K', '\0', 'L', '\0', '\0', 'M'};
 
-int get_right_child(int index)
+int right_child(int i)
 {
-    // node is not null
-    // and the result must lie within the number of nodes for a complete binary tree
-    if(tree[index]!='\0' && ((2*index)+1)<=complete_node)
-        return (2*index)+1;
-    // right child doesn't exist
+    
+    if(tree[i]!='\0' && ((2*i)+1)<=complete_node)
+        return (2*i)+1;
+   
     return -1;
 }
 
-int get_left_child(int index)
+int left_child(int i)
 {
-    // node is not null
-    // and the result must lie within the number of nodes for a complete binary tree
-    if(tree[index]!='\0' && (2*index)<=complete_node)
-        return 2*index;
-    // left child doesn't exist
+    
+    if(tree[i]!='\0' && (2*i)<=complete_node)
+        return 2*i;
+    
     return -1;
 }
 
-void preorder(int index)
+void preorder(int i)
 {
-    // checking for valid index and null node
-    if(index>0 && tree[index]!='\0')
+    
+    if(i>0 && tree[i]!='\0')
     {
-        printf(" %c ",tree[index]); // visiting root
-        preorder(get_left_child(index)); //visiting left subtree
-        preorder(get_right_child(index)); //visiting right subtree
+        printf(" %c ",tree[i]); 
+        preorder(left_child(i)); 
+        preorder(right_child(i)); 
     }
 }
 
-void postorder(int index)
+void postorder(int i)
 {
-    // checking for valid index and null node
-    if(index>0 && tree[index]!='\0')
+    
+    if(i>0 && tree[i]!='\0')
     {
-        postorder(get_left_child(index)); //visiting left subtree
-        postorder(get_right_child(index)); //visiting right subtree
-        printf(" %c ",tree[index]); //visiting root
+        postorder(left_child(i)); 
+        postorder(right_child(i)); 
+        printf(" %c ",tree[i]); 
     }
 }
 
-void inorder(int index)
+void inorder(int i)
 {
-    // checking for valid index and null node
-    if(index>0 && tree[index]!='\0')
+    
+    if(i>0 && tree[i]!='\0')
     {
-        inorder(get_left_child(index)); //visiting left subtree
-        printf(" %c ",tree[index]); //visiting root
-        inorder(get_right_child(index)); // visiting right subtree
+        inorder(left_child(i)); 
+        printf(" %c ",tree[i]); 
+        inorder(right_child(i)); 
     }
 }
 
 int main()
 {
-    printf("Preorder:\n");
+   printf("Preoder:\n");
     preorder(1);
-    printf("\nPostorder:\n");
+   printf("Postorder:\n");
     postorder(1);
-    printf("\nInorder:\n");
+   printf("Inorder:\n");
     inorder(1);
     printf("\n");
     return 0;
